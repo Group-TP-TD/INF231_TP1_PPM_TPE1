@@ -8,16 +8,17 @@
 
 static void ignorer_commentaires_et_espaces(FILE *f) {
     int c;
-    do {
-        while ((c = fgetc(f)) != EOF && isspace(c));
-        if (c == '#') {
-            while ((c = fgetc(f)) != EOF && c != '\n');
+    while ((c = fgetc(f)) != EOF) {
+        if (isspace(c)) {
+            continue;  // sauter les espaces
+        } else if (c == '#') {
+            // ignorer tout le commentaire jusqua la fin de ligne
+            while ((c = fgetc(f)) != '\n' && c != EOF);
         } else {
-            ungetc(c, f);
+            ungetc(c, f); // remettre le caractere non-espace/non-# dans le flux
             break;
         }
-        while (c != EOF);
-    }
+    }    
 }
 
 // Lit une image PPM (P3) et la charge en memoire.
@@ -65,7 +66,7 @@ ImagePPM* lirePPM(const char* nom_fichier) {
         }
     }
 
-    for (int i = 0; i < image->largeur; i++) {
+    for (int i = 0; i < image->hauteur; i++) {
         for (int j = 0; j < image-> largeur; j++) {
             if (fscanf(fichier, "%d %d %d", &image->pixels[i][j].r, &image->pixels[i][j].g, &image->pixels[i][j].b) != 3) {
                 fprintf(stderr, "Erreur : donnees de pixel corrompues.\n");
@@ -118,5 +119,5 @@ void libererImage(ImagePPM *image) {
     if (image == NULL) return;
     for (int i = 0; i < image->hauteur; i++) free(image->pixels[i]);
     free(image->pixels);
-    free(image;)
+    free(image);
 }

@@ -3,6 +3,7 @@
 #include <string.h>
 #include "ppm_io.h"
 #include "operations.h"
+#include <ctype.h>
 
 #define CLAMP(x, min, max) ((x) < (min) ? (min) : ((x) > (max) ? (max) : (x)))
 /*
@@ -70,7 +71,7 @@ void afficher_taille(const ImagePPM *img) {
 // Fonctions avancees
 
 ImagePPM* decouper_image(const ImagePPM *img, int l1, int l2, int c1, int c2) {
-   (!img || !img->pixels) return NULL;
+   if (!img || !img->pixels) return NULL;
 
    // Bornes correctes
    if (l1 < 0) l1 = 0;
@@ -101,7 +102,7 @@ ImagePPM* decouper_image(const ImagePPM *img, int l1, int l2, int c1, int c2) {
    decoupe->max_val = img->max_val;
 
    // Allocation memoire de la matrice
-   decoupe->largeur = (Pixel**) malloc(new_hauteur * sizeof(Pixel*));
+   decoupe->pixels = (Pixel**) malloc(new_hauteur * sizeof(Pixel*));
    if (!decoupe->pixels) {
     perror("Erreur d'allocation lignes decoupe");
     free(decoupe);
@@ -128,7 +129,7 @@ ImagePPM* decouper_image(const ImagePPM *img, int l1, int l2, int c1, int c2) {
 }
 
 
-//  Fonction utilitaire : médiane d’un tableau de 9 valeurs ----------
+//  Fonction utilitaire : mediane d’un tableau de 9 valeurs ----------
 static int median9(int *values) {
     // Tri par bulle simple
     for (int i = 0; i < 8; i++) {
@@ -140,12 +141,12 @@ static int median9(int *values) {
             }
         }
     }
-    return values[4]; // valeur médiane
+    return values[4]; // valeur mediane
 }
 
 /**
- *  Applique un filtre médian 3x3 à l’image donnée.
- *  img ImagePPM à filtrer (modifiée en place)
+ *  Applique un filtre median 3x3 a l’image donnee.
+ *  img ImagePPM a filtrer (modifiee en place)
  */
 void appliquer_filtre_median(ImagePPM *img) {
     if (!img || !img->pixels) return;
@@ -153,7 +154,7 @@ void appliquer_filtre_median(ImagePPM *img) {
     int h = img->hauteur;
     int w = img->largeur;
 
-    // Crée une copie pour ne pas altérer les données pendant le filtrage
+    // Cree une copie pour ne pas alterer les donnees pendant le filtrage
     Pixel **copie = (Pixel **)malloc(h * sizeof(Pixel *));
     for (int i = 0; i < h; i++) {
         copie[i] = (Pixel *)malloc(w * sizeof(Pixel));
@@ -179,7 +180,7 @@ void appliquer_filtre_median(ImagePPM *img) {
                         g[count] = p.g;
                         b[count] = p.b;
                     } else {
-                        // bord : répéter le pixel courant
+                        // bord : repeter le pixel courant
                         Pixel p = copie[y][x];
                         r[count] = p.r;
                         g[count] = p.g;
@@ -195,7 +196,7 @@ void appliquer_filtre_median(ImagePPM *img) {
         }
     }
 
-    // Libération de la copie
+    // Liberation de la copie
     for (int i = 0; i < h; i++) free(copie[i]);
     free(copie);
 }
