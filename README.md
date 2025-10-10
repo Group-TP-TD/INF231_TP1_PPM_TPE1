@@ -76,7 +76,9 @@ Exécution
 | `dom <R                             | G                                     | B> <valeur> <fichier>`        | Modifie la luminosité d’une couleur dominante. | `dom R 30 images/test.ppm` |
 | `cut <fichier> <l1> <l2> <c1> <c2>` | Découpe une sous-image rectangulaire. | `cut images/test.ppm 0 2 0 2` |                                                |                            |
 | `fil <fichier>`                     | Applique un filtre médian.            | `fil images/test.ppm`         |                                                |                            |
-| `quit`                              | Quitte le programme.                  | —                             |                                                |                            |
+| `quit`                              | Quitte le programme.                  | —                             |                
+
+
 Organisation de développement
 Phase 1 — Création de la structure du projet
 Création des dossiers src/ et images/
