@@ -84,13 +84,16 @@ Organisation de développement
 Phase 1 — Création de la structure du projet
 Création des dossiers src/ et images/
 Définition de la structure ImagePPM et des prototypes dans operations.h
+
 Phase 2 — Implémentation modulaire
 Chaque membre travaille sur un fichier spécifique dans src/
 Compilation séparée des modules
 Tests unitaires indépendants pour chaque opération
+
 Phase 3 — Intégration
 Le membre 5  relie toutes les fonctions dans main.c
 Mise au point de la CLI avec gestion des erreurs et messages utilisateurs
+
 Phase 4 — Tests finaux
 Création de plusieurs fichiers .ppm dans images/
 Test de toutes les commandes (gris, neg, dom, cut, fil)
