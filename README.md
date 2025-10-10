@@ -80,6 +80,7 @@ Exécution
 
 
 Organisation de développement
+
 Phase 1 — Création de la structure du projet
 Création des dossiers src/ et images/
 Définition de la structure ImagePPM et des prototypes dans operations.h
